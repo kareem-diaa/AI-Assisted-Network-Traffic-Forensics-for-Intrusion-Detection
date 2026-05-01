@@ -1,0 +1,4 @@
+,Accuracy,ROC-AUC,Train Time (s)
+Random Forest,0.998,0.9998,10.51
+Decision Tree,0.9979,0.9998,2.5
+Logistic Regression,0.9452,0.988,3.98

@@ -1,0 +1,6 @@
+# Large dataset files - download from CIC-IDS2017
+*.pcap_ISCX.csv
+*.pcap_ISCX.csv.gz
+ids-env/
+__pycache__/
+*.pyc
