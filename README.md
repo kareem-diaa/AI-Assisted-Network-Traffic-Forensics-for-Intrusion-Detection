@@ -54,16 +54,42 @@ The models were trained and validated against the **CIC-IDS2017** dataset, proce
 
 
 ## How to Run
-```bash
-# Clone the repo
-git clone https://github.com/YourUsername/network-forensics-ids.git
 
-# Run ML model (requires Python 3 + pip)
+### 1 — Train the model (one-time, requires the CIC-IDS2017 CSV dataset)
+```bash
 pip install pandas numpy scikit-learn matplotlib seaborn joblib
+# Place CIC-IDS2017 CSV files (e.g. Friday-WorkingHours.pcap_ISCX.csv) inside ml/
 cd ml
 python3 ids_model.py
+# Produces: ids_model.pkl  scaler.pkl  feature_names.pkl
+```
 
-# Run full pipeline (requires Docker)
+### 2 — Run the model against a PCAP file
+```bash
+pip install cicflowmeter pandas numpy scikit-learn joblib
+
+# Copy your .pkl files into the ml/ folder, then:
+cd ml
+python3 predict_pcap.py --pcap ../pcap/attack_scan.pcap
+
+# With explicit paths (useful if .pkl files are elsewhere):
+python3 predict_pcap.py \
+    --pcap    ../pcap/attack_scan.pcap \
+    --model   ids_model.pkl \
+    --scaler  scaler.pkl \
+    --features feature_names.pkl \
+    --output  ../pcap/attack_scan_predictions.csv
+```
+
+The script will:
+1. Convert the PCAP to network-flow features using **CICFlowMeter**
+2. Load the saved model, scaler, and feature list
+3. Predict **BENIGN** or **ATTACK** for every flow
+4. Print a summary (total flows, attack %, top attacker IPs)
+5. Save full per-flow results to a CSV
+
+### 3 — Run full pipeline (requires Docker)
+```bash
 cd ../  
 git clone https://github.com/certego/PcapMonkey
 cd PcapMonkey

@@ -106,4 +106,6 @@ plt.savefig('class_distribution.png', dpi=150)
 
 joblib.dump(best_model, 'ids_model.pkl')
 joblib.dump(scaler, 'scaler.pkl')
+joblib.dump(top_features, 'feature_names.pkl')
 print(f"\nDone. Best: {best_name} (AUC={best_auc:.4f})")
+print(f"Saved: ids_model.pkl, scaler.pkl, feature_names.pkl")
